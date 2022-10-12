@@ -16,15 +16,12 @@ A <- matrix(A, 100, 10) %>%
 names(A)
 
 # create 10 summary df's by each column
-a <- list()
-for (i in seq_along(vars)) {
+col_freq <- function(vars) {
   x <- A %>%
-    group_by(!!!rlang::syms(vars[i])) %>%
+    group_by(!!!rlang::syms(vars)) %>%
     summarize(freq = n(), .groups = "drop")
-  a[[i]] <- x
-  print(names(x))
-  rm(x)
 }
+a <- map(vars, col_freq)
 
 # Output with a note
 names(a) <- vars
