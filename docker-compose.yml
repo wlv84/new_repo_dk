@@ -1,0 +1,11 @@
+version: "3.7"
+
+services:
+  rproject:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: test
+    container_name: test
+    volumes:
+      - ./output:/home/output
