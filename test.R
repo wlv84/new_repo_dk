@@ -1,5 +1,4 @@
 library("tidyverse")
-library("purrr")
 library("openxlsx")
 
 # Requests:
@@ -11,14 +10,16 @@ library("openxlsx")
 set.seed(1)
 vars <- paste0("x", 1:10)
 A <- sample(1:10, 1000, TRUE)
-A <- matrix(A, 100, 10) %>% as.data.frame() %>% rename_with(~ vars)
+A <- matrix(A, 100, 10) %>%
+  as.data.frame() %>%
+  rename_with(~vars)
 names(A)
 
 # create 10 summary df's by each column
 a <- list()
 for (i in seq_along(vars)) {
-  x <- A %>% 
-    group_by(!!!rlang::syms(vars[i])) %>% 
+  x <- A %>%
+    group_by(!!!rlang::syms(vars[i])) %>%
     summarize(freq = n(), .groups = "drop")
   a[[i]] <- x
   print(names(x))
@@ -27,9 +28,5 @@ for (i in seq_along(vars)) {
 
 # Output with a note
 names(a) <- vars
-write.xlsx(a, paste("output", "test.xlsx", sep = "/"))
-print("Mission Accomplished!!!")
-
-
-
-
+write.xlsx(a, paste("/home/test", "test.xlsx", sep = "/"))
+print("Mission Completed!!!")
